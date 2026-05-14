@@ -28,33 +28,28 @@
 
 ### Part 2a: Source Selection
 
-> List the source node types as a bullet list. For each, one-line reason.
-
 | Source Node Type | Why it is a source |
 |---|---|
-| _node type_ | _one-line reason_ |
-| _node type_ | _one-line reason_ |
+| Spawn (entrance) | I need to run Dijkstra from spawn to compute distances to all relics and the exit; this is the starting point of every route. |
+| Relic chambers | I need to run Dijkstra from each relic to compute distances to all other relics and to the exit; the search needs these distances to explore different visitation orders. |
+| Exit node | I include the exit node, although the primary need is distances FROM relics and spawn TO the exit; running from exit provides consistent distance lookups. |
 
 ### Part 2b: Distance Storage
 
-> Fill in the table. No prose required.
-
 | Property | Your answer |
 |---|---|
-| Data structure name | |
-| What the keys represent | |
-| What the values represent | |
-| Lookup time complexity | |
-| Why O(1) lookup is possible | |
+| Data structure name | Nested dictionary: dict[node, dict[node, float]] |
+| What the keys represent | Outer keys are source nodes; inner keys are destination nodes. |
+| What the values represent | The float values are the minimum cost (shortest-path distance) from the outer-key source to the inner-key destination. |
+| Lookup time complexity | O(1) average case for dictionary lookups. |
+| Why O(1) lookup is possible | Python dictionaries use hash tables internally, enabling constant-time average-case access by key. |
 
 ### Part 2c: Precomputation Complexity
 
-> State the total complexity and show the arithmetic. Two to three lines max.
-
-- **Number of Dijkstra runs:** _your answer_
-- **Cost per run:** _your answer_
-- **Total complexity:** _your answer_
-- **Justification (one line):** _your answer_
+- **Number of Dijkstra runs:** k + 2, where k = |M| (one run per relic, plus one from spawn and one from exit).
+- **Cost per run:** O((|V| + |E|) log |V|) using binary heap; single shortest-path run costs O(m log n).
+- **Total complexity:** O((k + 2) * (m log n)) = O(k * m log n) (dropping lower-order terms).
+- **Justification (one line):** I must compute shortest paths from every critical node (relics, spawn, exit), and each Dijkstra run provides those one source at a time.
 
 ---
 

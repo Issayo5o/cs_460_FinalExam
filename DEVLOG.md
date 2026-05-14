@@ -16,12 +16,9 @@ Read the full assignment carefully. The problem is combining two phases: (1) pre
 
 ---
 
-## Entry 2 – [Date]: [Short description]
+## Entry 2 – May 14, 2026, 3:20 PM: Dijkstra Implementation Sprint
 
-> Required. At least one entry must describe a bug, wrong assumption, or design change
-> you encountered. Describe what went wrong and how you resolved it.
-
-_Your entry here._
+I implemented `run_dijkstra()` using a binary heap-based priority queue to handle efficient edge relaxation. I initially had a bug where I was processing nodes from the heap multiple times, causing redundant relaxations; I fixed this by adding a visited set and skipping already-processed nodes. I verified the correctness of my Dijkstra implementation against the provided test cases and confirmed that the distance table structure (nested dict) provides O(1) lookup as required. I also implemented `select_sources()` to identify the spawn, all relics, and the exit node as sources, then used these in `precompute_distances()` to build the complete distance table.
 
 ---
 
