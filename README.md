@@ -1,7 +1,7 @@
 # The Torchbearer
 
-**Student Name:** Issaa
-**Student ID:** 1234567
+**Student Name:** Issa Alwazir
+**Student ID:** 131040114
 **Course:** CS 460 – Algorithms | Spring 2026
 
 > This README is your project documentation. Write it the way a developer would document
