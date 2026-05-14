@@ -34,7 +34,13 @@ def explain_problem():
 
     TODO
     """
-    return "TODO"
+    return """
+- A single shortest-path run from S computes the cheapest way to reach each location, but cannot decide which relic to collect first; greedy choices about order do not guarantee global optimality.
+
+- After knowing all inter-location travel costs, the structural decision that remains is the order in which to visit the relic chambers—a sequence problem where different orders incur different total costs despite using the same precomputed paths.
+
+- This problem is a search over orders because the optimal solution depends on the sequence in which relics are visited, not just the shortest paths between them.
+"""
 
 
 # =============================================================================

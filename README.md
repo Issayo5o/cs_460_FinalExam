@@ -1,7 +1,7 @@
 # The Torchbearer
 
-**Student Name:** ___________________________
-**Student ID:** ___________________________
+**Student Name:** Issaa
+**Student ID:** 1234567
 **Course:** CS 460 – Algorithms | Spring 2026
 
 > This README is your project documentation. Write it the way a developer would document
@@ -13,17 +13,14 @@
 
 ## Part 1: Problem Analysis
 
-> Document why this problem is not just a shortest-path problem. Three bullet points, one
-> per question. Each bullet should be 1-2 sentences max.
-
 - **Why a single shortest-path run from S is not enough:**
-  _Your answer here._
+  A single shortest-path run from S computes the cheapest way to reach each location, but cannot decide which relic to collect first; greedy choices about order do not guarantee global optimality.
 
 - **What decision remains after all inter-location costs are known:**
-  _Your answer here._
+  After knowing all inter-location travel costs, the structural decision that remains is the order in which to visit the relic chambers—a sequence problem where different orders incur different total costs despite using the same precomputed paths.
 
 - **Why this requires a search over orders (one sentence):**
-  _Your answer here._
+  This problem is a search over orders because the optimal solution depends on the sequence in which relics are visited, not just the shortest paths between them.
 
 ---
 

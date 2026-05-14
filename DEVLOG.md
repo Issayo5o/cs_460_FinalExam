@@ -1,7 +1,7 @@
 # Development Log – The Torchbearer
 
-**Student Name:** ___________________________
-**Student ID:** ___________________________
+**Student Name:** Issa Alwazir
+**Student ID:** 131040114
 
 > Instructions: Write at least four dated entries. Required entry types are marked below.
 > Two to five sentences per entry is sufficient. Write entries as you go, not all in one
@@ -10,12 +10,9 @@
 
 ---
 
-## Entry 1 – [Date]: Initial Plan
+## Entry 1 – May 14, 2026, 2:00 PM: Initial Plan
 
-> Required. Write this before writing any code. Describe your plan: what you will
-> implement first, what parts you expect to be difficult, and how you plan to test.
-
-_Your entry here._
+Read the full assignment carefully. The problem is combining two phases: (1) precompute shortest paths via Dijkstra from key nodes, and (2) search over relic visitation orders using branch-and-bound pruning. Initial plan: implement Dijkstra first, then precomputation wrapper, then the recursive search with mutable best-so-far tracking. Expect the search to be the trickiest part due to state management and pruning conditions. Will test against the provided test cases after each major phase.
 
 ---
 
