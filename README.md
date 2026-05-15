@@ -4,11 +4,6 @@
 **Student ID:** 131040114
 **Course:** CS 460 – Algorithms | Spring 2026
 
-> This README is your project documentation. Write it the way a developer would document
-> their design decisions , bullet points, brief justifications, and concrete examples where
-> required. You are not writing an essay. You are explaining what you built and why you built
-> it that way. Delete all blockquotes like this one before submitting.
-
 ---
 
 ## Part 1: Problem Analysis
@@ -55,10 +50,7 @@
 
 ## Part 3: Algorithm Correctness
 
-> Document your understanding of why Dijkstra produces correct distances.
-> Bullet points and short sentences throughout. No paragraphs.
-
-### Part 3a: What the Invariant Means
+### Part 3a: Invariant Explanation
 
 - **For nodes already finalized (in S):**
   Nodes in the finalized set have been permanently assigned their true shortest-path distance from the source, and this distance will never change because Dijkstra selects the minimum-distance unfinalized node, ensuring no future path can be shorter.
@@ -66,13 +58,13 @@
 - **For nodes not yet finalized (not in S):**
   Non-finalized nodes hold the best distance estimate found so far via paths whose intermediate vertices are all already finalized, but they may be improved by future relaxations.
 
-### Part 3b: Why Each Phase Holds
+### Part 3b: Invariant Maintenance
 
-- **Initialization:** Before any iteration, the source node has distance 0 (which is correct since the shortest path from source to itself is 0) and is marked as finalized, while all other nodes have distance infinity (the weakest upper bound), satisfying the invariant.
+- **Initialization:** Before the first iteration, the source node is initialized with distance 0 (the only correct distance) and placed in the priority queue, while all other nodes start with distance infinity and remain unfinalized. The invariant holds because no nodes have been finalized yet (S is empty), so the second part of the invariant is vacuously true.
 
-- **Maintenance:** At each iteration, I finalize the unfinalized node with minimum distance. Because all edge weights are nonnegative, any path to this node through unfinalized nodes would have cost at least the current minimum distance, so the invariant is preserved when this node joins S, and all edges from it are then safely relaxed.
+- **Maintenance:** At each iteration, I pop the minimum-distance unfinalized node and finalize it. Because all edge weights are nonnegative, any path to this node through unfinalized nodes would have cost at least the current minimum distance, so finalizing it is safe. The invariant is preserved when this node joins S, and all edges from it are then relaxed.
 
-- **Termination:** When all nodes have been finalized, the invariant guarantees that every node's distance value is the true shortest-path distance from the source, since every reachable node has been added to S and every unreachable node correctly remains at infinity.
+- **Termination:** When the priority queue empties, all reachable nodes have been finalized, and their distance values are the true shortest-path distances from the source. Unreachable nodes remain at infinity.
 
 ### Part 3c: Why This Matters for the Route Planner
 
@@ -86,13 +78,13 @@ Correct shortest-path distances ensure that I can reliably calculate the true co
 
 - **The failure mode:** A greedy algorithm that always visits the nearest unvisited relic next makes locally optimal choices that do not guarantee globally optimal total cost, because visiting a far relic first might unlock much cheaper paths to other relics.
 
-- **Counter-example setup:** Using the spec illustration but with modified costs: S has relic neighbors B (cost 1) and C (cost 2); B connects to D (cost 1) and T (cost 1); C connects to B (cost 1), T (cost 1); D connects to B (cost 1), C (cost 1), and T (cost 50); all relics B, C, D must be visited.
+- **Counter-example setup:** Consider a simple graph: S connects to both B (cost 10) and C (cost 1); B is a relic; C is also a relic; and B connects directly to the exit T (cost 1), while C connects to T with cost 100.
 
-- **What greedy picks:** Greedy starts at S, picks nearest relic B (cost 1), then picks nearest unvisited D (cost 1), then reaches C (cost 1), then exits at T. But D→T costs 50, so greedy pays: 1+1+1+50 = 53.
+- **What greedy picks:** Greedy starts at S, picks the nearest relic C (cost 1), then tries to reach T from C. But T is only reachable from B, so greedy is stuck. Alternatively, if both relics have viable exits, greedy picks C first (cost 1), then later realizes B had the cheap exit (cost 1), so greedy pays 1+100+? instead of the smart order.
 
-- **What optimal picks:** The optimal order avoids that expensive D→T edge. Optimal: S→C (cost 2)→B (cost 1)→D (cost 1)→C (cost 1)→T (cost 1) = 6 total. Or better: S→B→C→(back if needed)→T avoids the 50-cost edge. The key is reordering lets us use cheaper exits.
+- **What optimal picks:** The optimal order is S -> B (cost 10) -> C (cost ?) -> T (cost 1 from B). By visiting B first despite its higher initial cost, we unlock the cheap B -> T edge, saving fuel overall.
 
-- **Why greedy loses:** Greedy locks into visiting D early because it's closest, then gets stuck with a 50-cost exit. A smarter order visits the relics such that the final exit from a cheap node, saving 47 fuel total.
+- **Why greedy loses:** Greedy picks by proximity alone, ignoring that a seemingly distant relic might have cheaper outgoing edges or connections. Different relic orders can dramatically change which exits are available and their costs.
 
 ### What the Algorithm Must Explore
 
@@ -155,5 +147,5 @@ Correct shortest-path distances ensure that I can reliably calculate the true co
 
 ## References
 
-- DystopiaQuest. "Dijkstra's Shortest Path Algorithm Visually Explained | How it Works | With Examples." YouTube video. https://www.youtube.com/watch?v=_ydLY-QBZRQ
+- DystopiaQuest. "Dijkstra's Shortest Path Algorithm Visually Explained | How it Works | With Examples." YouTube video. https://www.youtube.com/watch?v=CmIQ29cUGiE&time_continue=74&embeds_referring_euri=https%3A%2F%2Fsdsu.instructure.com%2F 
 - Course lecture notes on Dijkstra's algorithm and branch-and-bound search.

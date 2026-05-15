@@ -3,11 +3,6 @@
 **Student Name:** Issa Alwazir
 **Student ID:** 131040114
 
-> Instructions: Write at least four dated entries. Required entry types are marked below.
-> Two to five sentences per entry is sufficient. Write entries as you go, not all in one
-> sitting. Graders check that entries reflect genuine work across multiple sessions.
-> Delete all blockquotes before submitting.
-
 ---
 
 ## Entry 1 – May 14, 2026, 2:00 PM: Initial Plan
