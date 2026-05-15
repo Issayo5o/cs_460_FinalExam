@@ -36,7 +36,13 @@ I worked through Part 4 on why greedy fails and what the search must explore. I 
 
 ## Entry 5 – May 14, 2026, 8:30 PM: State and Search Implementation
 
-I implemented `find_optimal_route()` which initializes the search state with an empty set for relics_remaining and a mutable best container tracking the best solution found. I carefully designed the state representation to use current_loc, relics_remaining (as a set for O(1) checks), and cost_so_far. I filled out README Part 5a documenting exact variable names, Part 5b explaining why a set is the right data structure, and Part 5c analyzing the O(k!) worst-case search space. The key insight is that tracking what remains (not what we've collected) makes backtracking natural via recursion unwinding.
+I implemented `find_optimal_route()` which initializes the search state with an empty set for relics_remaining and a mutable best container tracking the best solution found. I carefully designed the state representation to use current_loc, relics_remaining (as a set for O(1) checks), and cost_so_far. I filled out README Part 5a documenting exact variable names, Part 5b explaining why a set is the right data structure, and Part 5c analyzing the O(k!) worst-case search space. The key insight is that tracking what remains (not what I've collected) makes backtracking natural via recursion unwinding.
+
+---
+
+## Entry 6 – May 14, 2026, 9:45 PM: Search and Pruning Implementation
+
+I implemented the `_explore()` recursive function, which is the core of the search algorithm. I handled the base case when all relics are collected, then wrote the pruning logic: if the lower bound (current cost + direct path to exit) beats the best solution found so far, I prune that branch. I added the required pruning safety comment explaining why this is correct. I also implemented `solve()` as the main pipeline that calls precompute_distances first, then find_optimal_route. I filled out README Part 6a (best-so-far tracking), Part 6b (lower bound logic), and Part 6c (pruning correctness). All the code now works together and passes the test cases.
 
 ---
 

@@ -110,7 +110,7 @@ Correct shortest-path distances ensure that I can reliably calculate the true co
 | Component | Variable name in code | Data type | Description |
 |---|---|---|---|
 | Current location | current_loc | node | The dungeon chamber where the Torchbearer is currently positioned. |
-| Relics already collected | relics_remaining | set | A set of relics not yet visited; we track what remains rather than what we have visited. |
+| Relics already collected | relics_remaining | set | A set of relics not yet visited; I track what remains rather than what I have visited. |
 | Fuel cost so far | cost_so_far | float | The cumulative distance (torch fuel) spent from spawn to the current location. |
 
 ### Part 5b: Data Structure for Visited Relics
@@ -134,25 +134,25 @@ Correct shortest-path distances ensure that I can reliably calculate the true co
 
 ### Part 6a: Best-So-Far Tracking
 
-> Three bullets.
+- **What is tracked:** I keep track of the best (lowest cost) complete solution I've found so far, along with the order of relics I visited to get that cost.
 
-- **What is tracked:** _Your answer here._
-- **When it is used:** _Your answer here._
-- **What it allows the algorithm to skip:** _Your answer here._
+- **When it is used:** Before I explore a new branch in the search tree, I check if there's any way it could possibly beat the best solution I already have.
+
+- **What it allows the algorithm to skip:** If a branch can't beat the best solution, I skip exploring it entirely. This cuts down the search tree a lot.
 
 ### Part 6b: Lower Bound Estimation
 
-> Three bullets.
+- **What information is available at the current state:** I know where I am right now, how much fuel I've spent getting here, and which relics I still need to collect.
 
-- **What information is available at the current state:** _Your answer here._
-- **What the lower bound accounts for:** _Your answer here._
-- **Why it never overestimates:** _Your answer here._
+- **What the lower bound accounts for:** I calculate the minimum possible remaining cost: the cost from my current location straight to the exit, ignoring that I haven't visited the remaining relics yet.
+
+- **Why it never overestimates:** This bound assumes I can teleport past all the relics I haven't collected, which is impossible. So the real cost must be at least this high—the bound is always a floor.
 
 ### Part 6c: Pruning Correctness
 
-> One to two bullets. Explain why pruning is safe.
+- **Why pruning is safe:** If the lower bound (cost so far + direct path to exit) is already bigger than or equal to my best solution, then there's no way any complete path through this branch can beat the best. So I can safely prune the branch without ever risking losing the optimal solution.
 
-- _Your answer here._
+- **Why we don't lose the optimal:** The optimal solution will always be in some unpruned branch, because its lower bound must be less than itself, so it won't get pruned away.
 
 ---
 
