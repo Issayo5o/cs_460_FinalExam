@@ -68,14 +68,11 @@
 
 ### Part 3b: Why Each Phase Holds
 
-- **Initialization: why the invariant holds before iteration 1:**
-  Before any iteration, the source node has distance 0 (which is correct since the shortest path from source to itself is 0) and is marked as finalized, while all other nodes have distance infinity (the weakest upper bound), satisfying the invariant.
+- **Initialization:** Before any iteration, the source node has distance 0 (which is correct since the shortest path from source to itself is 0) and is marked as finalized, while all other nodes have distance infinity (the weakest upper bound), satisfying the invariant.
 
-- **Maintenance: why finalizing the min-dist node is always correct:**
-  At each iteration, I finalize the unfinalized node with minimum distance. Because all edge weights are nonnegative, any path to this node through unfinalized nodes would have cost at least the current minimum distance, so the invariant is preserved when this node joins S, and all edges from it are then safely relaxed.
+- **Maintenance:** At each iteration, I finalize the unfinalized node with minimum distance. Because all edge weights are nonnegative, any path to this node through unfinalized nodes would have cost at least the current minimum distance, so the invariant is preserved when this node joins S, and all edges from it are then safely relaxed.
 
-- **Termination: what the invariant guarantees when the algorithm ends:**
-  When all nodes have been finalized, the invariant guarantees that every node's distance value is the true shortest-path distance from the source, since every reachable node has been added to S and every unreachable node correctly remains at infinity.
+- **Termination:** When all nodes have been finalized, the invariant guarantees that every node's distance value is the true shortest-path distance from the source, since every reachable node has been added to S and every unreachable node correctly remains at infinity.
 
 ### Part 3c: Why This Matters for the Route Planner
 
@@ -89,13 +86,13 @@ Correct shortest-path distances ensure that I can reliably calculate the true co
 
 - **The failure mode:** A greedy algorithm that always visits the nearest unvisited relic next makes locally optimal choices that do not guarantee globally optimal total cost, because visiting a far relic first might unlock much cheaper paths to other relics.
 
-- **Counter-example setup:** Using the spec illustration: S has relic neighbors B (cost 1) and C (cost 2); B connects to D (cost 1) and T (cost 1); C connects to T (cost 1); D connects to B (cost 1), C (cost 1), and T (cost 100); all relics B, C, D must be visited.
+- **Counter-example setup:** Using the spec illustration but with modified costs: S has relic neighbors B (cost 1) and C (cost 2); B connects to D (cost 1) and T (cost 1); C connects to B (cost 1), T (cost 1); D connects to B (cost 1), C (cost 1), and T (cost 50); all relics B, C, D must be visited.
 
-- **What greedy picks:** Greedy starts at S and greedily picks the nearest relic B (cost 1), then from B picks nearest unvisited D (cost 1), then from D picks nearest unvisited C (cost 1), finally reaches T (cost 1), for a total of 1+1+1+1 = 4.
+- **What greedy picks:** Greedy starts at S, picks nearest relic B (cost 1), then picks nearest unvisited D (cost 1), then reaches C (cost 1), then exits at T. But D→T costs 50, so greedy pays: 1+1+1+50 = 53.
 
-- **What optimal picks:** The optimal order is S → B (1) → D (1) → C (1) → T (1), also totaling 4, but consider if T from D had cost 50 instead: greedy would waste fuel on that bad path, while reordering to S → C → B → D → T might find T from C is cheaper and save fuel overall.
+- **What optimal picks:** The optimal order avoids that expensive D→T edge. Optimal: S→C (cost 2)→B (cost 1)→D (cost 1)→C (cost 1)→T (cost 1) = 6 total. Or better: S→B→C→(back if needed)→T avoids the 50-cost edge. The key is reordering lets us use cheaper exits.
 
-- **Why greedy loses:** Greedy's inability to look ahead means it cannot see that routing through intermediate relics in a different sequence might connect to cheaper exit paths, missing reorderings that reduce total cost by finding shared cheap intermediate nodes.
+- **Why greedy loses:** Greedy locks into visiting D early because it's closest, then gets stuck with a 50-cost exit. A smarter order visits the relics such that the final exit from a cheap node, saving 47 fuel total.
 
 ### What the Algorithm Must Explore
 
@@ -158,6 +155,5 @@ Correct shortest-path distances ensure that I can reliably calculate the true co
 
 ## References
 
-> Bullet list. If none beyond lecture notes, write that.
-
-- _Your references here._
+- DystopiaQuest. "Dijkstra's Shortest Path Algorithm Visually Explained | How it Works | With Examples." YouTube video. https://www.youtube.com/watch?v=_ydLY-QBZRQ
+- Course lecture notes on Dijkstra's algorithm and branch-and-bound search.
