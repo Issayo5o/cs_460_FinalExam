@@ -185,7 +185,23 @@ def explain_search():
 
     TODO
     """
-    return "TODO"
+    return """
+### Why Greedy Fails
+
+- **The failure mode:** A greedy algorithm that always visits the nearest unvisited relic next makes locally optimal choices that do not guarantee globally optimal total cost, because visiting a far relic first might unlock much cheaper paths to other relics.
+
+- **Counter-example setup:** Using the spec illustration: S has relic neighbors B (cost 1) and C (cost 2); B connects to D (cost 1) and T (cost 1); C connects to T (cost 1); D connects to B (cost 1), C (cost 1), and T (cost 100); all relics B, C, D must be visited.
+
+- **What greedy picks:** Greedy starts at S and greedily picks the nearest relic B (cost 1), then from B picks nearest unvisited D (cost 1), then from D picks nearest unvisited C (cost 1), finally reaches T (cost 1), for a total of 1+1+1+1 = 4.
+
+- **What optimal picks:** The optimal order is S → B (1) → D (1) → C (1) → T (1), also totaling 4, but consider if T from D had cost 50 instead: greedy would waste fuel on that bad path, while reordering to S → C → B → D → T might find T from C is cheaper and save fuel overall.
+
+- **Why greedy loses:** Greedy's inability to look ahead means it cannot see that routing through intermediate relics in a different sequence might connect to cheaper exit paths, missing reorderings that reduce total cost by finding shared cheap intermediate nodes.
+
+### What the Algorithm Must Explore
+
+- The algorithm must explore different orders in which to visit relics, because the total fuel cost depends critically on the sequence, and no greedy choice of "which relic next" guarantees that the resulting order is globally optimal.
+"""
 
 
 # =============================================================================

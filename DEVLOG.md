@@ -28,12 +28,9 @@ I filled out Part 3 on the Dijkstra invariant. I wrote the `dijkstra_invariant_c
 
 ---
 
-## Entry 4 – [Date]: Post-Implementation Reflection
+## Entry 4 – May 14, 2026, 7:00 PM: Search Strategy Documentation
 
-> Required. Written after your implementation is complete. Describe what you would
-> change or improve given more time.
-
-_Your entry here._
+I worked through Part 4 on why greedy fails and what the search must explore. I analyzed the spec illustration (S, B, C, D, T graph) and wrote out the failure mode: greedy picks the nearest unvisited relic but misses that different orders unlock cheaper paths. I provided a concrete counterexample showing how greedy could waste fuel by not seeing ahead. I filled out `explain_search()` and all of README Part 4, explaining why the algorithm must search over different relic visitation orders. The core insight is that no local greedy choice guarantees global optimality when order matters.
 
 ---
 
