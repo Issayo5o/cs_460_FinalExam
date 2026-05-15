@@ -22,9 +22,9 @@ I implemented `run_dijkstra()` using a binary heap-based priority queue to handl
 
 ---
 
-## Entry 3 – [Date]: [Short description]
+## Entry 3 – May 14, 2026, 5:30 PM: Algorithm Correctness Documentation
 
-_Your entry here._
+I filled out Part 3 on the Dijkstra invariant. I wrote the `dijkstra_invariant_check()` function explaining what the invariant means for finalized and non-finalized nodes. I then documented the three phases—initialization, maintenance, and termination—making sure to emphasize how nonnegative edge weights guarantee correctness at each step. I completed README Part 3a, 3b, 3c with detailed explanations connecting the invariant to my search algorithm's correctness. All explanations match between the code function and the README exactly.
 
 ---
 
