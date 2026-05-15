@@ -107,33 +107,26 @@ Correct shortest-path distances ensure that I can reliably calculate the true co
 
 ### Part 5a: State Representation
 
-> Document the three components of your search state as a table.
-> Variable names here must match exactly what you use in torchbearer.py.
-
 | Component | Variable name in code | Data type | Description |
 |---|---|---|---|
-| Current location | | | |
-| Relics already collected | | | |
-| Fuel cost so far | | | |
+| Current location | current_loc | node | The dungeon chamber where the Torchbearer is currently positioned. |
+| Relics already collected | relics_remaining | set | A set of relics not yet visited; we track what remains rather than what we have visited. |
+| Fuel cost so far | cost_so_far | float | The cumulative distance (torch fuel) spent from spawn to the current location. |
 
 ### Part 5b: Data Structure for Visited Relics
 
-> Fill in the table.
-
 | Property | Your answer |
 |---|---|
-| Data structure chosen | |
-| Operation: check if relic already collected | Time complexity: |
-| Operation: mark a relic as collected | Time complexity: |
-| Operation: unmark a relic (backtrack) | Time complexity: |
-| Why this structure fits | |
+| Data structure chosen | Set (Python set type) |
+| Operation: check if relic already collected | Time complexity: O(1) average case (hash table lookup) |
+| Operation: mark a relic as collected | Time complexity: O(1) average case (set.remove after copying) |
+| Operation: unmark a relic (backtrack) | Time complexity: O(1) average case (set union/difference creates new set via recursion unwinding) |
+| Why this structure fits | Sets provide O(1) average membership testing and efficient set operations (union, difference) needed during recursive search and backtracking. |
 
 ### Part 5c: Worst-Case Search Space
 
-> Two bullets.
-
-- **Worst-case number of orders considered:** _Your answer (in terms of k)._
-- **Why:** _One-line justification._
+- **Worst-case number of orders considered:** O(k!) where k = |M| (factorial because the search tree explores all permutations of relics).
+- **Why:** The recursive search has k choices for which relic to visit first, k-1 for the second, and so on, yielding k! total orderings in the worst case when pruning cannot eliminate branches.
 
 ---
 

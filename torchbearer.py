@@ -228,7 +228,16 @@ def find_optimal_route(dist_table, spawn, relics, exit_node):
 
     TODO
     """
-    pass
+    # Convert relics to a set for O(1) membership testing
+    relics_remaining = set(relics)
+    
+    # best = [best_cost, best_order]
+    best = [float('inf'), []]
+    
+    # Start the search from spawn with no relics collected yet
+    _explore(dist_table, spawn, relics_remaining, [], 0, exit_node, best)
+    
+    return (best[0], best[1])
 
 
 def _explore(dist_table, current_loc, relics_remaining, relics_visited_order,

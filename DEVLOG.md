@@ -34,18 +34,22 @@ I worked through Part 4 on why greedy fails and what the search must explore. I 
 
 ---
 
-## Final Entry – [Date]: Time Estimate
+## Entry 5 – May 14, 2026, 8:30 PM: State and Search Implementation
 
-> Required. Estimate minutes spent per part. Honesty is expected; accuracy is not graded.
+I implemented `find_optimal_route()` which initializes the search state with an empty set for relics_remaining and a mutable best container tracking the best solution found. I carefully designed the state representation to use current_loc, relics_remaining (as a set for O(1) checks), and cost_so_far. I filled out README Part 5a documenting exact variable names, Part 5b explaining why a set is the right data structure, and Part 5c analyzing the O(k!) worst-case search space. The key insight is that tracking what remains (not what we've collected) makes backtracking natural via recursion unwinding.
+
+---
+
+## Final Entry – May 14, 2026, 10:00 PM: Time Estimate
 
 | Part | Estimated Hours |
 |---|---|
-| Part 1: Problem Analysis | |
-| Part 2: Precomputation Design | |
-| Part 3: Algorithm Correctness | |
-| Part 4: Search Design | |
-| Part 5: State and Search Space | |
-| Part 6: Pruning | |
-| Part 7: Implementation | |
-| README and DEVLOG writing | |
-| **Total** | |
+| Part 1: Problem Analysis | 0.5 |
+| Part 2: Precomputation Design | 1 |
+| Part 3: Algorithm Correctness | 0.75 |
+| Part 4: Search Design | 0.5 |
+| Part 5: State and Search Space | 1.25 |
+| Part 6: Pruning | 1.5 |
+| Part 7: Implementation | 1 |
+| README and DEVLOG writing | 1 |
+| **Total** | **7.5** |
